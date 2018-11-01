@@ -493,14 +493,17 @@
 			temp = {};
 			$.each(_temp, (pid, arr) => {
 				$.each(arr, (idx, item) => {
+					let children = item[ajaxConfig.keyChildren];
+					let the_children = children || [];
+					let children_num = the_children.length;
 					let val = {
 						pid: pid,
 						name: item[ajaxConfig.keyName],
 						value: item[ajaxConfig.keyVal],
+						children_num: children_num
 					};
 					db[id][val.value] = $.extend(item, val);
 					group.push(val);
-					let children = item[ajaxConfig.keyChildren];
 					if(children && children.length){
 						temp[val.value] = children;
 					}
@@ -514,7 +517,7 @@
 		$.each(result, (idx, arr) => {
 			let groupDiv = [`<div style="left: ${(linkageWidth-0) * idx}px;" class="xm-select-linkage-group xm-select-linkage-group${idx + 1} ${idx != 0 ? 'xm-select-linkage-hide':''}">`];
 			$.each(arr, (idx2, item) => {
-				let span = `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}"><span>${item.name}</span></li>`;
+				let span = `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}" children_num="${item.children_num}"><span>${item.name}</span></li>`;
 				groupDiv.push(span);
 			});
 			groupDiv.push(`</div>`);
